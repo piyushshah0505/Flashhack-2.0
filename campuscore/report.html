@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusCore — Semester Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            padding: 2rem;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        .header {
+            background: #1a1a2e;
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e5e5e5;
+        }
+        
+        .card h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .metric {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e5e5e5;
+            text-align: center;
+        }
+        
+        .metric .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #378ADD;
+        }
+        
+        .metric .label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th {
+            background: #f8f8f8;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        tr:last-child td { border-bottom: none; }
+        
+        .badge-green {
+            background: #EAF3DE;
+            color: #27500A;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .badge-red {
+            background: #FCEBEB;
+            color: #791F1F;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .badge-orange {
+            background: #FAEEDA;
+            color: #633806;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .badge-blue {
+            background: #E6F1FB;
+            color: #0C447C;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .bar-wrap {
+            background: #f0f0f0;
+            border-radius: 4px;
+            height: 8px;
+            margin-top: 6px;
+        }
+        
+        .bar-fill {
+            height: 8px;
+            border-radius: 4px;
+            background: #378ADD;
+        }
+        
+        .boot-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .boot-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E6F1FB;
+            color: #0C447C;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .semaphore-log {
+            background: #1a1a2e;
+            color: #00ff88;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SECTION 1: Header -->
+        <div class="header">
+            <h1>CampusCore — Semester Report</h1>
+            <p>Automated resource management · Room Allocation · GPU Cluster · Service Boot</p>
+        </div>
+        
+        <!-- SECTION 2: Metric Cards -->
+        <div class="grid-3">
+            <div class="metric">
+                <div class="value">8</div>
+                <div class="label">Courses Scheduled</div>
+            </div>
+            <div class="metric">
+                <div class="value">10/10 GB</div>
+                <div class="label">GPU Memory Used</div>
+            </div>
+            <div class="metric">
+                <div class="value">7/7</div>
+                <div class="label">Services Booted</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Module 1 - Room Allocation -->
+        <div class="grid-2">
+            <div class="card">
+                <h2>Room Utilisation</h2>
+                
+        <div style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-weight: 600;">R1</span>
+                <span style="color: #666;">5 courses · 8 hrs</span>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-fill" style="width: 50.0%;"></div>
+            </div>
+            <div style="font-size: 12px; color: #999; margin-top: 4px;">50.0% utilized</div>
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-weight: 600;">R2</span>
+                <span style="color: #666;">3 courses · 6 hrs</span>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-fill" style="width: 37.5%;"></div>
+            </div>
+            <div style="font-size: 12px; color: #999; margin-top: 4px;">37.5% utilized</div>
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-weight: 600;">R3</span>
+                <span style="color: #666;">0 courses · 0 hrs</span>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-fill" style="width: 0.0%;"></div>
+            </div>
+            <div style="font-size: 12px; color: #999; margin-top: 4px;">0.0% utilized</div>
+        </div>
+        
+            </div>
+            <div class="card">
+                <h2>Course Schedule</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Time Slot</th>
+                            <th>Room</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+        <tr>
+            <td style="font-weight: 600;">CS201</td>
+            <td>8:00 - 9:00</td>
+            <td><span class="badge-blue">R1</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">CS101</td>
+            <td>8:00 - 10:00</td>
+            <td><span class="badge-blue">R2</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">MA201</td>
+            <td>9:00 - 11:00</td>
+            <td><span class="badge-blue">R1</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">PH301</td>
+            <td>10:00 - 12:00</td>
+            <td><span class="badge-blue">R2</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">CHEM201</td>
+            <td>11:00 - 13:00</td>
+            <td><span class="badge-blue">R1</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">EN101</td>
+            <td>13:00 - 14:00</td>
+            <td><span class="badge-blue">R1</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">BIO101</td>
+            <td>14:00 - 16:00</td>
+            <td><span class="badge-blue">R1</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">PSY101</td>
+            <td>15:00 - 17:00</td>
+            <td><span class="badge-blue">R2</span></td>
+        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Module 2 - GPU Cluster -->
+        <div class="grid-2">
+            <div class="card">
+                <h2>Selected Jobs (Knapsack DP)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Student</th>
+                            <th>Memory</th>
+                            <th>Value</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+        <tr>
+            <td style="font-weight: 600;">JOB2</td>
+            <td>Bob</td>
+            <td>3 GB</td>
+            <td>85</td>
+            <td><span class="badge-green">Selected</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">JOB3</td>
+            <td>Charlie</td>
+            <td>5 GB</td>
+            <td>120</td>
+            <td><span class="badge-green">Selected</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">JOB4</td>
+            <td>Diana</td>
+            <td>2 GB</td>
+            <td>60</td>
+            <td><span class="badge-green">Selected</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">JOB1</td>
+            <td>Alice</td>
+            <td>4 GB</td>
+            <td>100</td>
+            <td><span class="badge-red">Rejected</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">JOB5</td>
+            <td>Eve</td>
+            <td>4 GB</td>
+            <td>95</td>
+            <td><span class="badge-red">Rejected</span></td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: 600;">JOB6</td>
+            <td>Frank</td>
+            <td>3 GB</td>
+            <td>75</td>
+            <td><span class="badge-red">Rejected</span></td>
+        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h2>Semaphore Log</h2>
+                <div class="semaphore-log">Bob ACQUIRED slot (1/3)
+Charlie ACQUIRED slot (2/3)
+Diana ACQUIRED slot (3/3)
+Alice BLOCKED — GPU full (3/3)
+Bob RELEASED slot (2/3)
+Alice ACQUIRED slot (3/3)
+Diana RELEASED slot (1/3)
+Alice RELEASED slot (0/3)
+
+— Wait Times —
+Bob: 0.0 cycles
+Charlie: 0.0 cycles
+Diana: 0.0 cycles
+Alice: 0.3 cycles</div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Module 3 - Service Boot -->
+        <div class="card">
+            <h2>Service Boot Sequence (Topological Sort)</h2>
+            
+        <div class="boot-step">
+            <div class="boot-num">1</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">Database</div>
+                <div style="color: #999; font-size: 12px;">Needs: None</div>
+            </div>
+            <span class="badge-green">Ready</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">2</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">AuthService</div>
+                <div style="color: #999; font-size: 12px;">Needs: Database</div>
+            </div>
+            <span class="badge-green">Ready</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">3</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">FileStorage</div>
+                <div style="color: #999; font-size: 12px;">Needs: Database</div>
+            </div>
+            <span class="badge-green">Ready</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">4</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">EmailService</div>
+                <div style="color: #999; font-size: 12px;">Needs: AuthService</div>
+            </div>
+            <span class="badge-green">Ready</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">5</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">Portal</div>
+                <div style="color: #999; font-size: 12px;">Needs: AuthService, FileStorage</div>
+            </div>
+            <span class="badge-orange">Low Priority</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">6</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">Dashboard</div>
+                <div style="color: #999; font-size: 12px;">Needs: Portal</div>
+            </div>
+            <span class="badge-orange">Low Priority</span>
+        </div>
+        
+        <div class="boot-step">
+            <div class="boot-num">7</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 3px;">Analytics</div>
+                <div style="color: #999; font-size: 12px;">Needs: Dashboard, FileStorage</div>
+            </div>
+            <span class="badge-green">Ready</span>
+        </div>
+        
+        </div>
+        
+        <!-- SECTION 6: Analytics Summary -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2>Semester-End Analytics</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600;">Room Utilisation</td>
+                        <td style="text-align: right;">29.2% across all rooms</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">GPU Efficiency</td>
+                        <td style="text-align: right;">3 / 6 jobs selected (50.0%)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Boot Success</td>
+                        <td style="text-align: right;">7 / 7 services booted (100.0%)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- SECTION 7: Footer -->
+        <p style="text-align:center; color:#aaa; font-size:12px; margin-top:2rem; padding-top:1rem;">
+            CampusCore · Built for FlashHack 2.0 · All algorithms run live
+        </p>
+    </div>
+</body>
+</html>
